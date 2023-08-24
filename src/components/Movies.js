@@ -4,12 +4,17 @@ import axios from 'axios'
 const Movies = () => {
     let[movies,setMovies] = useState([]);
     let [searchTerm,setSearchTerm] = useState("");
-    console.log(searchTerm)
+    let [error,setError] = useState("");
+    // console.log(searchTerm)
+    // console.log(error)
   
     const searchData = ()=>{
         axios(`http://www.omdbapi.com/?apikey=26829b18&s=${searchTerm}`)
         .then((response)=>{
-            console.log(response.data.Search);
+            if(response.data.Search == undefined){
+                setError("Invalid movie name. Please try again.")
+            }
+            console.log("Response => ",response.data.Search);
             setMovies(response.data.Search);
         })
         .catch(err=>{
@@ -31,6 +36,9 @@ const Movies = () => {
                     <img src={movie.Poster} alt="Poster"/>    
                 </li>
             ))
+        }
+        {
+            error && <div className='error'>{error}</div>
         }
     </div>
   )
