@@ -21,14 +21,18 @@ const Movies = () => {
             console.log("Error -> ",err);
         })
     }
-  
+
+    function handleBehaviour(e){
+        e.preventDefault();
+        searchData();
+    }
     return (
-
-
     <div>
         <p><b>Search Movie</b></p>
-        <input type='text' onChange={(e)=>setSearchTerm(e.target.value)}/>
-        <button onClick={searchData}>Search</button>
+        <form onSubmit={(e)=>handleBehaviour(e)}>
+            <input type='text' onChange={(e)=>setSearchTerm(e.target.value)}/>
+            <button>Search</button>
+        </form>
         {
             movies && movies.map((movie,index)=>(
                 <li key={index}>
